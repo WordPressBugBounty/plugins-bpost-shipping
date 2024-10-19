@@ -1,8 +1,8 @@
 <?php
 
-use WC_BPost_Shipping\Adapter\WC_BPost_Shipping_Adapter_Woocommerce;
 use WC_BPost_Shipping\Locale\WC_BPost_Shipping_Locale_Locale;
 use WC_BPost_Shipping\Options\WC_BPost_Shipping_Options_Base;
+use WC_BPost_Shipping\WC_Bpost_Shipping_Container as Container;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -17,21 +17,29 @@ class WC_BPost_Shipping_Data_Builder {
 	private WC_BPost_Shipping_Address $shipping_address;
 	private WC_BPost_Shipping_Delivery_Methods $delivery_methods;
 
+	private array $shm_supported_languages = array(
+		WC_BPost_Shipping_Locale_Locale::LANGUAGE_EN,
+		WC_BPost_Shipping_Locale_Locale::LANGUAGE_FR,
+		WC_BPost_Shipping_Locale_Locale::LANGUAGE_NL,
+	);
+	private WC_BPost_Shipping_Logger $logger;
+
 	public function __construct(
 		WC_BPost_Shipping_Address $shipping_address,
 		WC_BPost_Shipping_Options_Base $shipping_options,
 		WC_BPost_Shipping_Delivery_Methods $delivery_methods
 	) {
-		$this->shipping_options     = $shipping_options;
-		$this->shipping_address     = $shipping_address;
-		$this->delivery_methods     = $delivery_methods;
+		$this->shipping_options = $shipping_options;
+		$this->shipping_address = $shipping_address;
+		$this->delivery_methods = $delivery_methods;
+		$this->logger           = Container::get_logger();
 	}
 
 	/**
 	 * Various bpost data needed
 	 * @return string[]
 	 */
-	public function get_bpost_data() {
+	public function get_bpost_data(): array {
 
 		// Build data to inject
 		$order_reference = uniqid();
@@ -45,7 +53,7 @@ class WC_BPost_Shipping_Data_Builder {
 			'order_reference'           => $order_reference,
 			'callback_url'              => $callback_url,
 			// Euro-cents
-			'sub_total'                 => round( WC()->cart->subtotal * 100 ),
+			'sub_total'                 => round( WC()->cart->get_subtotal() * 100 ),
 			// In grams, if 0, then we set 1kg (1000g)
 			'sub_weight'                => ceil( WC_BPost_Shipping_Cart::get_weight_in_g() ?: 1000 ),
 			'language'                  => $this->get_language_for_shm(),
@@ -65,10 +73,7 @@ class WC_BPost_Shipping_Data_Builder {
 		return $bpost_data;
 	}
 
-	/**
-	 * @return string
-	 */
-	private function get_extra_json() {
+	private function get_extra_json(): string {
 		if ( $this->shipping_address->get_shipping_state() ) {
 			return json_encode(
 				array( 'customerState' => $this->shipping_address->get_shipping_state() )
@@ -78,24 +83,15 @@ class WC_BPost_Shipping_Data_Builder {
 		return '';
 	}
 
-	/**
-	 * @return string
-	 */
-	private function get_language_for_shm() {
-		$locale = new WC_BPost_Shipping_Locale_Locale(
-			new WC_BPost_Shipping_Adapter_Woocommerce()
-		);
+	private function get_language_for_shm(): string {
+		$locale = new WC_BPost_Shipping_Locale_Locale( Container::get_adapter() );
 
 		$language = $locale->get_language();
 
-		$shm_supported_languages = array(
-			WC_BPost_Shipping_Locale_Locale::LANGUAGE_EN,
-			WC_BPost_Shipping_Locale_Locale::LANGUAGE_FR,
-			WC_BPost_Shipping_Locale_Locale::LANGUAGE_NL,
-		);
-
-		if ( in_array( $language, $shm_supported_languages, true ) ) {
+		if ( in_array( $language, $this->shm_supported_languages, true ) ) {
 			return strtoupper( $language );
+		} else {
+			$this->logger->warning( "Unsupported language '$language', falling back to '" . WC_BPost_Shipping_Locale_Locale::LANGUAGE_DEFAULT . "'" );
 		}
 
 		return WC_BPost_Shipping_Locale_Locale::LANGUAGE_DEFAULT;
@@ -105,7 +101,7 @@ class WC_BPost_Shipping_Data_Builder {
 	 * Shipping address to pre-fill shm form
 	 * @return string[]
 	 */
-	public function get_shipping_address() {
+	public function get_shipping_address(): array {
 		$shipping_address = array(
 			'first_name'   => $this->shipping_address->get_first_name(),
 			'last_name'    => $this->shipping_address->get_last_name(),

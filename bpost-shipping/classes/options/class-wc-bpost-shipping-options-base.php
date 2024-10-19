@@ -190,8 +190,18 @@ class WC_BPost_Shipping_Options_Base {
 	 * @return bool
 	 */
 	public function is_free_shipping( $country_iso_2, $amount, array $free_shipping_coupons ) {
-		return $this->is_free_country_for_amount( $country_iso_2, $amount )
-		       || $this->has_free_shipping_coupon( $free_shipping_coupons );
+		$result = $this->is_free_country_for_amount( $country_iso_2, $amount )
+		          || $this->has_free_shipping_coupon( $free_shipping_coupons );
+
+		// Apply a filter to determine if free shipping should be applied
+		return apply_filters(
+			'wc_bpost_is_free_shipping',
+			$result,
+			false,
+			$country_iso_2,
+			$amount,
+			$free_shipping_coupons
+		);
 	}
 
 	/**

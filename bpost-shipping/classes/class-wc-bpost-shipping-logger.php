@@ -64,7 +64,8 @@ class WC_BPost_Shipping_Logger extends AbstractLogger {
 		}
 
 		if ( WC_Log_Levels::get_level_severity( $wcLevel ) < WC_Log_Levels::get_level_severity( $this->loggingLevel ) ) {
-			throw new InvalidArgumentException( "Unknown log level ${$wcLevel}" );
+			$message = sprintf( "Unknown log level %s", $wcLevel );
+			throw new InvalidArgumentException( esc_html( $message ) );
 		}
 
 		if ( isset( $context['source'] ) && $context['source'] !== $this->loggerSource ) {
@@ -86,7 +87,7 @@ class WC_BPost_Shipping_Logger extends AbstractLogger {
 	 * @param string $className
 	 */
 	public function setName( string $className ) {
-		\assert( \class_exists( $className ) );
+		assert( class_exists( $className ) );
 
 		$this->className = $className;
 	}
@@ -103,7 +104,7 @@ class WC_BPost_Shipping_Logger extends AbstractLogger {
 	/**
 	 * Builds replacements list (for interpolate()) from the context values.
 	 * based on
-	 * @link https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md#12-message
+	 * {@link https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md#12-message}
 	 *
 	 * @param array $context
 	 *

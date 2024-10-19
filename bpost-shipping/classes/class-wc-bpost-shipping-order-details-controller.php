@@ -7,7 +7,7 @@ use WC_BPost_Shipping\Controller\WC_BPost_Shipping_Controller_Base;
 use WC_BPost_Shipping\Locale\WC_BPost_Shipping_Locale_Locale;
 use WC_BPost_Shipping\Options\WC_BPost_Shipping_Options_Base;
 use WC_BPost_Shipping\Street\WC_BPost_Shipping_Street_Formatter;
-use WC_BPost_Shipping\WC_Bpost_Shipping_Container;
+use WC_BPost_Shipping\WC_Bpost_Shipping_Container as Container;
 
 /**
  * Class WC_BPost_Shipping_Order_Details_Controller adds a 'bpost shipping details' block on last page (order received)
@@ -77,7 +77,7 @@ class WC_BPost_Shipping_Order_Details_Controller extends WC_BPost_Shipping_Contr
 	 */
 	private function get_geo6_template_data() {
 		if ( ! $this->meta_handler->get_delivery_point_type() ) {
-			$api_factory   = new WC_BPost_Shipping_Api_Factory( WC_Bpost_Shipping_Container::get_logger() );
+			$api_factory   = new WC_BPost_Shipping_Api_Factory( Container::get_logger() );
 			$order_updater = new WC_BPost_Shipping_Order_Updater(
 				$this->order,
 				array( 'bpost_delivery_point_id' => $this->meta_handler->get_delivery_point_id_value() ),
@@ -86,7 +86,7 @@ class WC_BPost_Shipping_Order_Details_Controller extends WC_BPost_Shipping_Contr
 			$order_updater->update_bpost_point_type();
 		}
 
-		$locale = new WC_BPost_Shipping_Locale_Locale( $this->adapter );
+		$locale = new WC_BPost_Shipping_Locale_Locale( Container::get_adapter() );
 
 		$url = sprintf(
 			'https://pudo.bpost.be/Locator?Function=page&Country=BE&Partner=999999&Id=%s&Type=%s&Language=%s',
