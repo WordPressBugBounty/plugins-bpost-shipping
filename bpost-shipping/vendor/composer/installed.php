@@ -18,7 +18,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => 'f7a3a903e7acb7e7e159016ed37bef05c4aa408d',
+            'reference' => 'eec236b2b2f5373e91d6ce41ea93db57430f78f2',
             'dev_requirement' => false,
         ),
         'antidot/woocommerce-bpost-shipping' => array(

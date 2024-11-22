@@ -7,7 +7,7 @@ Author URI: https://www.bpost.be/
 Requires at least: 4.9
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 3.1.11
+Stable tag: 3.1.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,10 @@ bpost shipping plugin has been tested and is compatible with the following exten
 4. Define your shipping methods under the Woocommerce settings tab
 5. Configure your bpost shipping settings under the Woocommerce shipping > bpost shipping tab
 == Changelog ==
+
+#### 3.1.12
+
+* label creation could fail with Insurance option
 
 #### 3.1.11
 

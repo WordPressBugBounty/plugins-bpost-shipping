@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Antidot-be/bpost-api-library.git",
-                "reference": "f7a3a903e7acb7e7e159016ed37bef05c4aa408d"
+                "reference": "eec236b2b2f5373e91d6ce41ea93db57430f78f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Antidot-be/bpost-api-library/zipball/f7a3a903e7acb7e7e159016ed37bef05c4aa408d",
-                "reference": "f7a3a903e7acb7e7e159016ed37bef05c4aa408d",
+                "url": "https://api.github.com/repos/Antidot-be/bpost-api-library/zipball/eec236b2b2f5373e91d6ce41ea93db57430f78f2",
+                "reference": "eec236b2b2f5373e91d6ce41ea93db57430f78f2",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,7 @@
                 "friendsofphp/php-cs-fixer": "=3.9.5",
                 "phpunit/phpunit": "^5"
             },
-            "time": "2024-07-16T14:04:09+00:00",
+            "time": "2024-10-15T14:27:22+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "dist",

@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the bpost shipping package.
 msgid ""
 msgstr ""
-"Project-Id-Version: bpost shipping 3.1.11\n"
+"Project-Id-Version: bpost shipping 3.1.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/package\n"
-"POT-Creation-Date: 2024-10-18 08:36:58+00:00\n"
+"POT-Creation-Date: 2024-11-22 13:53:58+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -196,7 +196,7 @@ msgstr ""
 msgid "Shipping status"
 msgstr ""
 
-#. #-#-#-#-#  bpost_shipping.pot (bpost shipping 3.1.11)  #-#-#-#-#
+#. #-#-#-#-#  bpost_shipping.pot (bpost shipping 3.1.12)  #-#-#-#-#
 #. Author of the plugin/theme
 #: classes/class-wc-bpost-shipping-method.php:261
 #: classes/class-wc-bpost-shipping-method.php:270

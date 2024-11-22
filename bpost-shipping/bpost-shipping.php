@@ -5,7 +5,7 @@
  * Description: bpost Shipping Manager is a service offered by bpost, allowing your customer to choose their preferred delivery method when ordering in your Woocommerce webshop.
  * Author: bpost
  * Author URI: https://www.bpost.be/
- * Version: 3.1.11
+ * Version: 3.1.12
  * WC requires at least: 3.0
  * WC tested up to: 8.9
  * Requires PHP: 7.4
@@ -14,7 +14,7 @@
 define( 'BPOST_PLUGIN_ID', 'bpost_shipping' );
 define( 'BPOST_PLUGIN_DIR', __DIR__ );
 define( 'BPOST_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'BPOST_PLUGIN_VERSION', '3.1.11' );
+define( 'BPOST_PLUGIN_VERSION', '3.1.12' );
 
 /**
  * Check if WooCommerce is active
